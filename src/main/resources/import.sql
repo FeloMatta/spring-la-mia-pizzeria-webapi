@@ -1,0 +1,2 @@
+INSERT INTO Pizze (nome, descrizione, foto_url, prezzo) VALUES('margherita', 'pomodoro e mozzarella', null, 6)
+INSERT INTO Pizze (nome, descrizione, foto_url, prezzo) VALUES('hasaki', 'pizza molto buona', null, 9)
