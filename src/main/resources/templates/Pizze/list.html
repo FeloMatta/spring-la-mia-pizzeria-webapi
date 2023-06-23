@@ -1,38 +1,49 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title>Document</title>
+<head th:insert="~{/fragments/resources :: head(pageTitle='Book List')}">
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>
-            Nome
-        </th>
-        <th>
-            Descrizione
-        </th>
-        <th>
-            Prezzo
-        </th>
-        <th>
-            Foto
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="pizze : ${listaPizze}">
-        <td th:text="${pizze.nome}"></td>
-        <td th:text="${pizze.descrizione}"></td>
-        <td th:text="${pizze.prezzo}"></td>
-        <td><img th:src="@{pizze.fotoUrl}"></td>
-    </tr>
-    </tbody>
-</table>
+<nav th:replace="~{/fragments/navbar :: navbar(current='pizze')}"></nav>
+<div class="container">
+    <h1>Lista Pizze</h1>
+    <hr>
+    <!-- form di ricerca -->
+    <div>
+        <form method="GET" th:action="@{/pizze}">
+            <div class="input-group">
+                <input class="form-control" name="keyword" placeholder="Search by name"
+                       th:value="${searchInput}" type="search">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- mostro la tabella solo se la lista ha risultati -->
+    <table class="table" th:if="${listaPizze.size() > 0}">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrizione</th>
+            <th>Foto</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pizze : ${listaPizze}">
+            <td th:text="${pizze.nome}"></td>
+            <td th:text="${pizze.descrizione}"></td>
+            <td th:text="${pizze.fotoUrl}"></td>
+            <td>
+                <a th:href="@{|/pizze/${pizze.id}|}"><i class="fa-solid fa-pizza-slice"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- se la lista è vuota mostro un messaggio -->
+    <div class="alert alert-info" th:unless="${listaPizze.size() > 0}">
+        No results
+    </div>
+</div>
 </body>
 </html>
