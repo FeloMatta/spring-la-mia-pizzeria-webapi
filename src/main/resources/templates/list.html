@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/resources :: head(pageTitle='Pizza')}">
+</head>
+<body>
+<div class="container">
+    <h1>Lista pizze</h1>
+    <hr>
+    <div>
+        <form method="GET" th:action="@{/}">
+            <div class="input-group">
+                <input class="form-control" name="keyword" placeholder="Cerca per nome"
+                       th:value="${searchInput}" type="search">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <a th:href="@{/create}">
+        <button class="btn btn-primary mt-2" type="button">Aggiungi una pizza</button>
+    </a>
+    <table class="table" th:if="${pizzaList.size() > 0}">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo</th>
+            <th>Dettagli</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pizza : ${pizzaList}">
+            <td th:text="${pizza.nome}"></td>
+            <td th:text="${pizza.prezzo} + €"></td>
+            <td>
+                <a th:href="@{|/detail/${pizza.id}|}"><i class="fa-solid fa-pizza-slice"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info" th:unless="${pizzaList.size() > 0}">
+        Nessun risultato
+    </div>
+</div>
+</body>
+</html>

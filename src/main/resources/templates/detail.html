@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/resources :: head(pageTitle='Pizza')}">
+</head>
+<body>
+<h1>Dettagli della pizza</h1>
+<hr>
+<h2>Nome: </h2>
+<h4 th:text="${pizza.nome}"></h4>
+<hr>
+<h2>Descrizione: </h2>
+<h4 th:text="${pizza.descrizione}"></h4>
+<hr>
+<h2>Prezzo: </h2>
+<h4 th:text="${pizza.prezzo} + €"></h4>
+<hr>
+<img alt="Foto Pizza" th:src="@{${pizza.urlFoto}}">
+</body>
+</html>
