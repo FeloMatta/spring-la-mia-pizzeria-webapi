@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,5 +71,43 @@ public class PizzaController {
         return "redirect:/";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Pizza pizza = getPizzaById(id);
+        model.addAttribute("pizza", pizza);
+        return "/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(
+            @PathVariable Integer id,
+            @Valid @ModelAttribute("pizza") Pizza formPizza,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        Pizza pizzaToEdit = getPizzaById(id);
+        if (bindingResult.hasErrors()) {
+            return "/edit";
+        }
+        formPizza.setId(pizzaToEdit.getId());
+        pizzaRepository.save(formPizza);
+        return "redirect:/";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        Pizza pizzaToDelete = getPizzaById(id);
+        pizzaRepository.delete(pizzaToDelete);
+        return "redirect:/";
+    }
+
+
+    private Pizza getPizzaById(Integer id) {
+        Optional<Pizza> result = pizzaRepository.findById(id);
+        if (result.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "pizza con id " + id + " non trovato");
+        }
+        return result.get();
+    }
 
 }

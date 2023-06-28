@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/resources :: head(pageTitle='Pizza')}">
+</head>
+<body class="mx-5">
+<h1>Modifica pizza</h1>
+<form id="pizza-form" method="post" th:action="@{|/edit/${pizza.id}|}" th:object="${pizza}">
+    <div class="mb-3">
+        <label class="form-label" for="nomePizza">Nome della pizza</label>
+        <input aria-describedby="nomePizza" class="form-control" id="nomePizza" required th:field="*{nome}"
+               type="text">
+        <div class="form-text" id="pizzaText">* obbligatorio</div>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('nome')}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="descrizionePizza">Descrizione della pizza</label>
+        <input class="form-control" id="descrizionePizza" required th:field="*{descrizione}" type="text">
+        <div class="form-text" id="descText">* obbligatorio</div>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('descrizione')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </div>
+    <label class="form-label" for="prezzoPizza">Prezzo della pizza</label>
+    <div class="mb-3 input-group">
+        <span class="input-group-text">€</span>
+        <input class="form-control" id="prezzoPizza" required th:field="*{prezzo}" type="text">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('prezzo')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('prezzo')}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-text" id="prezzoText">* obbligatorio</div>
+
+    <button class="btn btn-primary mt-3" type="submit">Invia</button>
+    <a th:href="@{/}">
+        <button class="btn btn-warning mt-3" type="button">Torna indietro</button>
+    </a>
+</form>
+</body>
+</html>
