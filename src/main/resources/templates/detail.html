@@ -3,6 +3,7 @@
 <head th:insert="~{/fragments/resources :: head(pageTitle='Pizza')}">
 </head>
 <body>
+<!-- Dettagli della pizza -->
 <h1>Dettagli della pizza</h1>
 <hr>
 <h2>Nome: </h2>
@@ -15,5 +16,30 @@
 <h4 th:text="${pizza.prezzo} + €"></h4>
 <hr>
 <img alt="Foto Pizza" th:src="@{${pizza.urlFoto}}">
+
+<!-- gestione offerte della pizza -->
+<h2>Offerte</h2>
+<!-- link per vedere il form di creazione delle offerte -->
+<div class="my-3">
+    <a class="btn btn-primary" th:href="@{/offerte/create(pizzaId=${pizza.id})}">Aggiungi offerta</a>
+</div>
+<table class="table" th:if="${pizza.offerte.size() > 0}">
+    <thead>
+    <tr>
+        <th>Inizio Offerta</th>
+        <th>Fine Offerta</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="offerta : ${pizza.offerte}" th:object="${offerta}">
+        <td th:text="${#temporals.format(inizioOfferta, 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(fineOfferta, 'dd/MM/yyyy')}"></td>
+    </tr>
+    </tbody>
+</table>
+<!-- messaggio se la lista delle offerte e' vuota -->
+<div ${pizza.offerte.size() class="alert alert-info" th:unless="${pizza.offerte.size() > 0}">
+    Non ci sono offerte
+</div>
 </body>
 </html>

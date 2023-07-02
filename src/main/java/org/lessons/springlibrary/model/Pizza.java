@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Pizza")
@@ -26,6 +28,9 @@ public class Pizza {
     @NotNull
     @Min(0)
     private BigDecimal prezzo;
+
+    @OneToMany(mappedBy = "pizza", cascade = {CascadeType.REMOVE})
+    private List<Offerta> offerte = new ArrayList<>(); // Relazione con le offerte
 
     public Pizza() {
         prezzo = BigDecimal.valueOf(0);
@@ -69,5 +74,13 @@ public class Pizza {
 
     public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public List<Offerta> getOfferte() {
+        return offerte;
+    }
+
+    public void setOfferte(List<Offerta> offerte) {
+        this.offerte = offerte;
     }
 }

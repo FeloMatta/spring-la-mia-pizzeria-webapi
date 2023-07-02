@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/resources :: head(pageTitle='Offerta')}">
+</head>
+
+<body>
+<div class="container">
+    <h1 th:text="|Offerta ${offerta.pizza.nome}|"></h1>
+    <hr>
+    <form
+            class="row"
+            id="offerta-form"
+            method="post"
+            th:action="@{/offerte/create}"
+            th:object="${offerta}"
+    >
+        <div class="mb-3">
+            <label class="form-label" for="inizioOfferta">Inizio dell'offerta</label>
+            <input class="form-control" id="inizioOfferta" required th:field="*{inizioOfferta}" type="date">
+            <div class="form-text" id="descText">* obbligatorio</div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('inizioOfferta')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('inizioOfferta')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="fineOfferta">fine dell'offerta</label>
+            <input class="form-control" id="fineOfferta" required th:field="*{fineOfferta}" type="date">
+            <div class="form-text" id="descText">* obbligatorio</div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('fineOfferta')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('fineOfferta')}" th:text="${err}"></li>
+                </ul>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Invia</button>
+            <a th:href="@{/}">
+                <button class="btn btn-warning mt-3" type="button">Torna indietro</button>
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
