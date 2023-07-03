@@ -38,6 +38,17 @@
     </div>
     <div class="form-text" id="prezzoText">* obbligatorio</div>
 
+    <div class="col-4">
+        <h3>Ingredienti</h3>
+        <div class="form-check" th:each="ingrediente : ${ingredientiList}">
+            <input class="form-check-input" th:field="*{id}" th:id="|ingrediente_${ingrediente.id}|"
+                   th:value="${ingrediente.id}"
+                   type="checkbox">
+            <label class="form-check-label" th:for="|ingrediente_${ingrediente.id}|" th:text="${ingrediente.name}">
+            </label>
+        </div>
+    </div>
+
     <button class="btn btn-primary mt-3" type="submit">Invia</button>
     <a th:href="@{/}">
         <button class="btn btn-warning mt-3" type="button">Torna indietro</button>
