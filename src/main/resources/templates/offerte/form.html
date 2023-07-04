@@ -14,6 +14,7 @@
             th:action="@{/offerte/create}"
             th:object="${offerta}"
     >
+        <input th:field="*{pizza}" type="hidden">
         <div class="mb-3">
             <label class="form-label" for="inizioOfferta">Inizio dell'offerta</label>
             <input class="form-control" id="inizioOfferta" required th:field="*{inizioOfferta}" type="date">
