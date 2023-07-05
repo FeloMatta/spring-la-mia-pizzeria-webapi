@@ -2,7 +2,6 @@ package org.lessons.springlibrary.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -49,14 +48,15 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // definisco la catena di filtri
         http.authorizeHttpRequests()
-                .requestMatchers("/edit/**").hasAuthority("ADMIN")
-                .requestMatchers("/create").hasAuthority("ADMIN")
-                .requestMatchers("/**").hasAnyAuthority("ADMIN", "USER")
-                .requestMatchers("/offerte/create/").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+//                .requestMatchers("/edit/**").hasAuthority("ADMIN")
+//                .requestMatchers("/create").hasAuthority("ADMIN")
+//                .requestMatchers("/offerte/create/**").hasAuthority("ADMIN")
+//                .requestMatchers(HttpMethod.POST, "/pizza/**").hasAuthority("ADMIN")
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout();
+        // disabilitiamo csrf per poter invocare le api da postman
+        http.csrf().disable();
         return http.build();
     }
 

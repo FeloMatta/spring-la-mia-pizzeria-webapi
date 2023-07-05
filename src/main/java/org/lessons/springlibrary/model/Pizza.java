@@ -1,5 +1,6 @@
 package org.lessons.springlibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class Pizza {
     @Min(0)
     private BigDecimal prezzo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pizza", cascade = {CascadeType.REMOVE})
     private List<Offerta> offerte = new ArrayList<>(); // Relazione con le offerte
 
